@@ -1,4 +1,5 @@
 import 'package:build_ui_in_run_time/models/user_model.dart';
+import 'package:build_ui_in_run_time/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -30,60 +31,7 @@ class MyApp extends StatelessWidget {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DynamicForm<User>(genericModel: genericUser),
-    );
-  }
-}
-
-class DynamicForm<T> extends StatefulWidget {
-  final GenericModel<T> genericModel;
-  const DynamicForm({Key? key, required this.genericModel}) : super(key: key);
-  @override
-  State<DynamicForm<T>> createState() => _DynamicFormState<T>();
-}
-
-class _DynamicFormState<T> extends State<DynamicForm<T>> {
-  List<Widget> buildFormFields() {
-    List<Widget> formFields = [];
-    widget.genericModel.fields.forEach((key, value) {
-      if (value is String) {
-        formFields.add(
-          TextField(
-            decoration: InputDecoration(labelText: key),
-            onChanged: (newValue) {},
-          ),
-        );
-      } else if (value is DateTime) {
-        formFields.add(
-          TextField(
-            decoration: InputDecoration(labelText: key),
-            keyboardType: TextInputType.datetime,
-            onChanged: (newValue) {},
-          ),
-        );
-      } else if (value is int) {
-        formFields.add(
-          TextField(
-            decoration: InputDecoration(labelText: key),
-            keyboardType: TextInputType.number,
-            onChanged: (newValue) {},
-          ),
-        );
-      }
-    });
-    return formFields;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dynamic Form'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        children: buildFormFields(),
-      ),
+      home: HomeScreen<User>(genericModel: genericUser),
     );
   }
 }
